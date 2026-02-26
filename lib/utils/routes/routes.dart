@@ -1,0 +1,43 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:mvvm_app/utils/routes/routes_name.dart';
+import 'package:mvvm_app/view/home_screen.dart';
+import 'package:mvvm_app/view/login_view.dart';
+
+import '../../SplashView/SplashView.dart';
+import '../../view/signUpView.dart';
+//এই কোডটি মূলত আপনার অ্যাপের "ট্রাফিক কন্ট্রোল সিস্টেম"
+class Routes {
+  //Route id type
+  //generationRoute() this is function
+  ///(RouteSettings settings) settings is an input
+  static Route<dynamic>generationRoute(RouteSettings settings) {
+    switch (settings.name) {
+
+      case Routesname.splash:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => SplashView(),
+        );
+
+      case Routesname.home:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => HomeScreen(),
+
+        );
+      case Routesname.singup:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => Signupview(),
+        );
+      case Routesname.login:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => LogInView(),
+        );
+      default:
+        return MaterialPageRoute(
+          builder: (_) {
+            return Scaffold(body: Center(child: Text("No route defined")));
+          },
+        );
+    }
+  }
+}
