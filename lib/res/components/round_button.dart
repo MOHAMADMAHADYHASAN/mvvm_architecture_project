@@ -9,9 +9,10 @@ class RoundButton extends StatelessWidget {
   const RoundButton({
     Key? key,
     required this.title,
+    required this.onPress,
+
     // এটা অপশনাল। কিছু না দিলে অটোমেটিক 'false' ধরে নেবে।
     this.loading = false,
-    required this.onPress,
   }) : super(key: key);
 
   @override

@@ -1,8 +1,8 @@
 class AppException implements Exception {
-  late final prefix;
-  late final message;
+  final String? prefix;
+  final String? message;
 
-  AppException([this.prefix, this.message]);
+  AppException({this.prefix, this.message});
 
   @override
   String toString() {
@@ -12,15 +12,23 @@ class AppException implements Exception {
 
 // data featch exception......................
 class FetchDataException extends AppException {
-  FetchDataException([String? message, String? prefix]) : super("Error During Communication:", message);
+  FetchDataException({String? message})
+    : super(prefix: "Error During Communication:", message: message);
 }
 
 class BadRequestException extends AppException {
-  BadRequestException([String? message, String? prefix])
-    : super("Invalid request:", message);
+  BadRequestException({String? prefix, String? message})
+    : super(prefix: "Invalid request:", message: message);
 }
 
 class UnauthorisedException extends AppException {
-  UnauthorisedException([String? message, String? prefix])
-    : super("Unauthorised request:", message);
+  UnauthorisedException({String? prefix, String? message})
+    : super(prefix: "Unauthorised request:", message: message);
+}
+
+class InvalidInputException extends AppException {
+  InvalidInputException({String? message}) : super(message: "Invalid request");
+}
+class NotFoundException extends AppException{
+  NotFoundException({String? message}): super (prefix: "Not Found", message:message);
 }

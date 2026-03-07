@@ -50,7 +50,11 @@ class _HomeScreenState extends State<HomeScreen> {
             child: IconButton(
               onPressed: () {
                 userPreferance.remove().then((value) {
-                  Navigator.pushNamed(context, Routesname.login);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Routesname.login,
+                    (route) => false,
+                  );
                 });
               },
               icon: const Icon(Icons.logout, color: Colors.red),
@@ -171,7 +175,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Row(
-
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // ২. প্রোডাক্ট ইমেজ ডিজাইন
@@ -188,7 +191,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 100,
                                     color: Colors.grey.shade200,
                                     child: const Icon(
-                                      Icons.image_not_supported,color: Colors.red,
+                                      Icons.image_not_supported,
+                                      color: Colors.red,
                                     ),
                                   ),
                             ),
@@ -257,8 +261,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
 
                                 const SizedBox(height: 8),
-                                //======================description===========0========================
 
+                                //======================description===========0========================
                                 Text(
                                   product?.description.toString() ?? "",
                                   maxLines: 2,
@@ -270,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
 
                                 const SizedBox(height: 8),
-//==============================================price=============================
+                                //==============================================price=============================
                                 Text(
                                   "\$${product?.price}",
                                   style: const TextStyle(
@@ -289,9 +293,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               );
 
-            case null:
-              // TODO: Handle this case.
-              throw UnimplementedError();
+            default:
+              return const Center(child: Text("Something went wrong"));
           }
         },
       ),

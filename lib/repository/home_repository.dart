@@ -11,9 +11,9 @@ class HomeRepository {
     try {
       dynamic response = await _apiServices.getGetApiServices(
         AppUrl.productUrl,
-
       );
-      return response = ProductModel.fromJson(response);
+
+      return ProductModel.fromJson(response);
     } catch (e) {
       throw e;
     }

@@ -4,6 +4,7 @@ import 'package:mvvm_app/data/app_exception.dart';
 import 'BaseApiServices.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+
 //কাজ:(NetworkApiServices) এর কাজ শুধু ইন্টারনেটের মাধ্যমে নির্দিষ্ট ঠিকানায় (URL) যাওয়া এবং ডেটা নিয়ে ফিরে আসা।
 // সে জানে না ডেটা দিয়ে কী হবে, সে শুধু এনে দেয়।
 
@@ -20,15 +21,16 @@ class NetworkApiServices extends BaseApiServices {
           .get(Uri.parse(url))
           .timeout(Duration(seconds: 10));
 
+      /// for any errror========================
       responseJson = returnResponse(response);
     } on SocketException {
-      throw FetchDataException("No Internet Connection");
+      throw FetchDataException(message: "No Internet Connection");
     }
     return responseJson;
   }
 
   @override
-  Future getPostApiServices(String url, dynamic data) async {
+  Future postApiServices(String url, dynamic data) async {
     dynamic responseJson;
     try {
       Response response = await post(
@@ -36,9 +38,10 @@ class NetworkApiServices extends BaseApiServices {
         body: data,
       ).timeout(Duration(seconds: 10));
 
+      /// for any errror========================
       responseJson = returnResponse(response);
     } on SocketException {
-      throw FetchDataException("No Internet Connection");
+      throw FetchDataException(message: "No Internet Connection");
     }
     return responseJson;
   }
@@ -49,18 +52,19 @@ class NetworkApiServices extends BaseApiServices {
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
       case 400:
-        throw BadRequestException(response.statusCode.toString());
+        throw BadRequestException(message: "${response.statusCode}");
       case 401:
       case 403:
-        throw UnauthorisedException(response.body.toString());
+        throw UnauthorisedException(message: response.body);
       case 404:
-        throw UnauthorisedException(response.statusCode.toString());
+        throw NotFoundException(
+          message: "Page not found:${response.statusCode}",
+        );
 
       default:
         throw FetchDataException(
-          "Error accured while communication with server " +
-              "with status code " +
-              response.statusCode.toString(),
+          message:
+              "Error occurred while communication with server with status code: ${response.statusCode}",
         );
     }
   }

@@ -10,7 +10,7 @@ class AuthRepository {
   Future<dynamic> loginApi( dynamic data) async {
     try {
       // ১. শেফ জানে ঠিক কোন লিঙ্কে (AppUrl.logInUrl) হিট করতে হবে
-      dynamic response = await _apiServices.getPostApiServices(
+      dynamic response = await _apiServices.postApiServices(
         AppUrl.logInUrl,
         data,
       );
@@ -24,7 +24,7 @@ class AuthRepository {
   ////////////
   Future<dynamic>signupApi(dynamic data) async {
     try {
-      dynamic response = await _apiServices.getPostApiServices(
+      dynamic response = await _apiServices.postApiServices(
         AppUrl.signupUrl,
         data,
       );

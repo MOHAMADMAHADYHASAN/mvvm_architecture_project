@@ -4,5 +4,5 @@ abstract class BaseApiServices {
   Future<dynamic> getGetApiServices(String url);
 
   //for  post request ...................
-  Future<dynamic> getPostApiServices(String url, dynamic data);
+  Future<dynamic> postApiServices(String url, dynamic data);
 }

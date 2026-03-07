@@ -6,14 +6,13 @@ import 'package:mvvm_app/view/login_view.dart';
 
 import '../../SplashView/SplashView.dart';
 import '../../view/signUpView.dart';
-//এই কোডটি মূলত আপনার অ্যাপের "ট্রাফিক কন্ট্রোল সিস্টেম"
+
 class Routes {
   //Route id type
   //generationRoute() this is function
   ///(RouteSettings settings) settings is an input
-  static Route<dynamic>generationRoute(RouteSettings settings) {
+  static Route<dynamic> generationRoute(RouteSettings settings) {
     switch (settings.name) {
-
       case Routesname.splash:
         return MaterialPageRoute(
           builder: (BuildContext context) => SplashView(),
@@ -22,7 +21,6 @@ class Routes {
       case Routesname.home:
         return MaterialPageRoute(
           builder: (BuildContext context) => HomeScreen(),
-
         );
       case Routesname.singup:
         return MaterialPageRoute(

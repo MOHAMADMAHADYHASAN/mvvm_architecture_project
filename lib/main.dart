@@ -18,19 +18,15 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
-      ChangeNotifierProvider(create: (_) => UserViewModel()),
-      ChangeNotifierProvider(create: (_) => HomeViewModel())
+        ChangeNotifierProvider(create: (_) => UserViewModel()),
+        ChangeNotifierProvider(create: (_) => HomeViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "flutter demo",
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity(),
-        ),
         initialRoute: Routesname.splash,
         onGenerateRoute: Routes.generationRoute,
       ),
     );
   }
-} 
+}
