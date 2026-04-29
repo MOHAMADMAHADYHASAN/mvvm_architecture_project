@@ -13,7 +13,7 @@ class UserViewModel with ChangeNotifier {
     return true;
   }
 
-  // user ber kora splash screen e eti use hoy ...............
+  // user ber kora splash screen e eti use hoy...............
   Future<UserModel> getUser() async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
 

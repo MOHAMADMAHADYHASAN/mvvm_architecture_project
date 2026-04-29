@@ -31,25 +31,18 @@ class AuthViewModel with ChangeNotifier {
   }
 
   Future<void> logInApi(dynamic data, BuildContext context) async {
-    // ১. ম্যানেজার বলল: "কাজ শুরু হচ্ছে, সবাইকে জানাও" (চাকা ঘোরাও)
-    setLoading(true);
-    // ২. ম্যানেজার রাঁধুনিকে (Repository) বলল: "API তে হিট করো"
-    // .then(value ) ta holo server theke j data (response) ta return kore e´seta ekhane ese thake
-    // response = value
+     setLoading(true);
+
 
     await my_AuthRepo
         .loginApi(data)
-        // ৩. যদি রান্না সফল হয় (Success)
-        .then((value) {
-          // চাকা বন্ধ
-          setLoading(false);
+         .then((value) {
+           setLoading(false);
           final userPreference = Provider.of<UserViewModel>(
             context,
             listen: false,
           );
 
-          /// data save korar jonno..................................
-          ///  data packet ti  UserModel ক্লাসের fromJson মেশিনে ঢুকিয়ে দিচ্ছে
 
           userPreference.saveUser(UserModel.fromJson(value));
 
@@ -57,7 +50,7 @@ class AuthViewModel with ChangeNotifier {
 
           Navigator.pushNamedAndRemoveUntil(
             context,
-            Routesname.home,
+            Routesname.main,
             (route) => false,
           );
           // print only whene the app is on developer mode
@@ -65,14 +58,13 @@ class AuthViewModel with ChangeNotifier {
             print(value.toString());
           }
         })
-        // ৪. যদি রান্না পুড়ে যায় (Error)
+
         .onError((error, stackTrace) {
-          // চাকা বন্ধ
+          //
           setLoading(false);
           utils.flashBarErrorMessage(error.toString(), context);
 
           // print only whene the app is on developer mode
-          //  এটা শুধু আপনার জন্য (ডেভেলপার)
           if (kDebugMode) {
             print("Error Log: " + error.toString());
           }
@@ -80,23 +72,22 @@ class AuthViewModel with ChangeNotifier {
   }
 
   Future<void> singInApi(dynamic data, BuildContext context) async {
-    // ১. ম্যানেজার বলল: "কাজ শুরু হচ্ছে, সবাইকে জানাও" (চাকা ঘোরাও)
+
+
     setSignUpLoading(true);
-    // ২. ম্যানেজার রাঁধুনিকে (Repository) বলল: "API তে হিট করো"
-    // .then(value ) ta holo server theke j data (response) ta return kore e´seta ekhane ese thake
-    // response = value
+
 
     my_AuthRepo
         .signupApi(data)
-        // ৩. যদি রান্না সফল হয় (Success)
+
         .then((value) {
-          // চাকা বন্ধ
+
           setSignUpLoading(false);
           utils.flashBarErrorMessage("SingUp Successfully", context);
 
           Navigator.pushNamedAndRemoveUntil(
             context,
-            Routesname.home,
+            Routesname.main,
             (route) => false,
           );
           // print only whene the app is on developer mode
@@ -104,14 +95,14 @@ class AuthViewModel with ChangeNotifier {
             print(value.toString());
           }
         })
-        // ৪. যদি রান্না পুড়ে যায় (Error)
+
         .onError((error, stackTrace) {
-          // চাকা বন্ধ
+
           setSignUpLoading(false);
           utils.flashBarErrorMessage(error.toString(), context);
 
           // print only whene the app is on developer mode
-          //  এটা শুধু আপনার জন্য (ডেভেলপার)
+
           if (kDebugMode) {
             print("Error Log: " + error.toString());
           }

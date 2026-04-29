@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 
-import 'package:mvvm_app/utils/routes/routes_name.dart';
 import 'package:mvvm_app/viewModel/home_View_model.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../data/response/status.dart';
+import '../utils/shimerCode/shimmer.dart';
 import '../viewModel/user_View_Model.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class ProductScreen extends StatefulWidget {
+  const ProductScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ProductScreen> createState() => _ProductScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ProductScreenState extends State<ProductScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    // সেখানে লেখা homeViewModel.fetchProductListApi() লাইনটি ViewModel-কে হুকুম দেয়:
-    // "ভাই, প্রোডাক্টের লিস্টটা নিয়ে এসো তো!"
-    // ViewModel কে কল করা হলো (listen: false কারণ এখানে UI আপডেট হচ্ছে না)
-    // step1
     super.initState();
     final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
     homeViewModel.fetchProductListApi();
@@ -30,104 +25,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userPreferance = Provider.of<UserViewModel>(context);
 
-    return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 10),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.8),
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              onPressed: () {
-                userPreferance.remove().then((value) {
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Routesname.login,
-                    (route) => false,
-                  );
-                });
-              },
-              icon: const Icon(Icons.logout, color: Colors.red),
-            ),
-          ),
-        ],
-      ),
-      body: Consumer<HomeViewModel>(
+    return  Consumer<HomeViewModel>(
         builder: (context, value, child) {
           switch (value.productList.status) {
-            // ================== LOADING STATE (SHIMMER) ==================
+          // ================== LOADING STATE (SHIMMER) ==================
             case Status.LOADING:
-              return ListView.builder(
-                itemCount: 8,
-                padding: const EdgeInsets.all(15),
-                itemBuilder: (context, index) {
-                  // shimmer effect for loading data......
-                  return Shimmer.fromColors(
-                    // main color
-                    baseColor: Colors.grey.shade300,
-                    // dhew dewar jonno
-                    highlightColor: Colors.grey.shade100,
-                    child: Container(
-                      margin: const EdgeInsets.only(bottom: 15),
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          const SizedBox(width: 15),
+              return shimmerCode();
 
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 15,
-                                  width: double.infinity,
-                                  color: Colors.white,
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  height: 10,
-                                  width: 100,
-                                  color: Colors.white,
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  height: 40,
-                                  width: double.infinity,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
-
-            // ================== ERROR STATE ==================
+          // ================== ERROR STATE ==================
             case Status.ERROR:
               return Center(
                 child: Column(
@@ -147,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
 
-            // ================== COMPLETED STATE (MAIN DESIGN) ==================
+          // ================== COMPLETED STATE (MAIN DESIGN) ==================
             case Status.COMPLETED:
               return ListView.builder(
                 padding: const EdgeInsets.symmetric(
@@ -297,7 +203,8 @@ class _HomeScreenState extends State<HomeScreen> {
               return const Center(child: Text("Something went wrong"));
           }
         },
-      ),
-    );
+      );
+
   }
 }
+

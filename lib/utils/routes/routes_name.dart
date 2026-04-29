@@ -8,6 +8,7 @@ class Routesname{
   static const String singup ="signup_screen" ;
 
   static const String home ="home_screen";
+  static const String main = "main_screen";
 
 }
 // now  we can use them like (Routesname.login )

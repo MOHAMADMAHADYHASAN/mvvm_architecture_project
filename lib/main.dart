@@ -3,6 +3,7 @@ import 'package:mvvm_app/utils/routes/routes.dart';
 import 'package:mvvm_app/utils/routes/routes_name.dart';
 import 'package:mvvm_app/viewModel/auth_View_Model.dart';
 import 'package:mvvm_app/viewModel/home_View_model.dart';
+import 'package:mvvm_app/viewModel/task_view_model.dart';
 import 'package:mvvm_app/viewModel/user_View_Model.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthViewModel()),
         ChangeNotifierProvider(create: (_) => UserViewModel()),
         ChangeNotifierProvider(create: (_) => HomeViewModel()),
+        ChangeNotifierProvider(create: (_) => TaskViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

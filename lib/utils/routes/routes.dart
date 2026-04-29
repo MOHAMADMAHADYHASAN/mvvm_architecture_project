@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_app/utils/routes/routes_name.dart';
-import 'package:mvvm_app/view/home_screen.dart';
 import 'package:mvvm_app/view/login_view.dart';
 
 import '../../SplashView/SplashView.dart';
+import '../../view/main_screen.dart';
 import '../../view/signUpView.dart';
 
 class Routes {
@@ -18,10 +17,12 @@ class Routes {
           builder: (BuildContext context) => SplashView(),
         );
 
-      case Routesname.home:
+
+      case Routesname.main:
         return MaterialPageRoute(
-          builder: (BuildContext context) => HomeScreen(),
+          builder: (BuildContext context) => MainScreen(),
         );
+
       case Routesname.singup:
         return MaterialPageRoute(
           builder: (BuildContext context) => Signupview(),
@@ -30,6 +31,8 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => LogInView(),
         );
+
+
       default:
         return MaterialPageRoute(
           builder: (_) {

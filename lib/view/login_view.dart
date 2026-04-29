@@ -174,11 +174,9 @@ class _LogInViewState extends State<LogInView> {
                                   "email": emailContriller.text.toString(),
                                   "password": passworldController.text.toString(),
                                 };
-
-                                // ২. ওয়েটার (View) ম্যানেজারকে (ViewModel) অর্ডার দিল
                                 authViewModel.logInApi(data, context);
-                                // eta shuno tokhn print hbe jokkhn  apps developper mode e thakbe relase mode ignore korbe
-                                if (kDebugMode) {
+                                //eta shuno tokhn print hbe jokkhn  apps developper mode e thakbe relase mode ignore korbe
+                                if(kDebugMode) {
                                   print('Api hit successful');
                                 }
                               }
@@ -187,13 +185,7 @@ class _LogInViewState extends State<LogInView> {
                         );
                       }),
 
-                      SizedBox(height: height * 0.02),
-                      RoundButton(
-                        title: " Home ",
-                        onPress: () {
-                          Navigator.pushNamed(context, Routesname.home);
-                        },
-                      ),
+
 
                       SizedBox(height: height * 0.03),
 

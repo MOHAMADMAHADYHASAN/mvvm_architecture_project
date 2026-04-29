@@ -1,8 +1,9 @@
-// this class is blueprint ...................
 abstract class BaseApiServices {
-  //for  get request ...................
-  Future<dynamic> getGetApiServices(String url);
 
-  //for  post request ...................
-  Future<dynamic> postApiServices(String url, dynamic data);
+
+  Future<dynamic> getGetApiServices(String url, {String? token});
+
+  Future<dynamic> postApiServices(String url, dynamic data, {String? token});
+  Future<dynamic> patchApiServices(String url, {String? token});
+  Future<dynamic> deleteApiServices(String url, {String? token});
 }

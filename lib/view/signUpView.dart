@@ -20,11 +20,11 @@ class _SignupviewState extends State<Signupview> {
 
   //  পাসওয়ার্ড লুকানো/দেখানোর জন্য স্মার্ট ভেরিয়েবল (setState দরকার নেই)
   final ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
-
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  // কিবোর্ডের ফোকাস কন্ট্রোল করার জন্য (কার্সর কোথায় থাকবে)
+  final FocusNode nameFocusNode = FocusNode();
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
 
@@ -33,8 +33,11 @@ class _SignupviewState extends State<Signupview> {
     // TODO: implement dispose
     super.dispose();
     _obsecurePassword.dispose();
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+
+    nameFocusNode.dispose();
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
   }
@@ -51,7 +54,6 @@ class _SignupviewState extends State<Signupview> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            // ২. স্ক্রল ভিউ যাতে ছোট ফোনে ওভারফ্লো না হয়
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -82,6 +84,29 @@ class _SignupviewState extends State<Signupview> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      // name
+                      CustomTextField(
+                        controller: nameController,
+                        focusNode: nameFocusNode,
+                        label: "Full Name",
+                        hint: "Enter your name",
+                        prefixIcon: Icons.person_outline,
+                        onFieldSubmitted: (value) {
+                          utils.fieldFocusChange(
+                            context,
+                            nameFocusNode,
+                            emailFocusNode,
+                          );
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter name";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: height * 0.02),
+                      // email
                       CustomTextField(
                         controller: emailController,
                         focusNode: emailFocusNode,
@@ -90,16 +115,13 @@ class _SignupviewState extends State<Signupview> {
                         prefixIcon: Icons.email_outlined,
                         keyboardType: TextInputType.emailAddress,
 
-                        // লজিক: যখন ইউজার কিবোর্ডে এন্টার/নেক্সট চাপবে
                         onFieldSubmitted: (value) {
-                          // এই ফাংশনটি ইমেইল থেকে ফোকাস সরিয়ে পাসওয়ার্ডে নিয়ে যাবে
                           utils.fieldFocusChange(
                             context,
                             emailFocusNode,
                             passwordFocusNode,
                           );
                         },
-                        // ভ্যালিডেশন যোগ করা হয়েছে
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Please enter email";
@@ -110,7 +132,7 @@ class _SignupviewState extends State<Signupview> {
 
                       SizedBox(height: height * 0.02),
 
-                      //এই বিল্ডারটি _obsecurePassword এর দিকে তাকিয়ে থাকবে
+                      //password
                       ValueListenableBuilder(
                         valueListenable: _obsecurePassword,
                         builder: (context, value, child) {
@@ -124,7 +146,6 @@ class _SignupviewState extends State<Signupview> {
                             obscureText: _obsecurePassword.value,
                             suffixIcon: IconButton(
                               onPressed: () {
-                                // টগল লজিক: সত্য থাকলে মিথ্যা, মিথ্যা থাকলে সত্য হবে
                                 _obsecurePassword.value =
                                     !_obsecurePassword.value;
                               },
@@ -163,6 +184,9 @@ class _SignupviewState extends State<Signupview> {
                                 if (_formKey.currentState!.validate()) {
                                   // creating data packet...................
                                   Map data = {
+                                    "name": nameController.text
+                                        .trim()
+                                        .toString(),
                                     "email": emailController.text
                                         .trim()
                                         .toString(),
